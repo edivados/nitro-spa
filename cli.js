@@ -1,6 +1,8 @@
 import { build, createNitro, prepare, copyPublicAssets, createDevServer } from "nitropack";
 import { defineCommand, runMain } from "citty";
 import { fileURLToPath } from "url";
+import { H3Event } from "h3";
+import { ServerResponse } from "http";
 
 const command = defineCommand({
   subCommands: {
@@ -15,13 +17,17 @@ const command = defineCommand({
         const nitro = await createNitro({
           dev: true,
           noPublicDir: true,
-          ignore: ["public"],
+          ignore: ["public"], // noPublicDir doesn't work in dev?
           handlers: [
             { route: "**", handler: "./handler.dev.ts" }
           ],
         });
         const server = createDevServer(nitro);
-        await server.listen(port);
+        const listener = await server.listen(port);
+        listener.server.on("upgrade", (req) => {
+          const event = new H3Event(req, new ServerResponse(req));
+          server.app.handler(event);
+        });
         await prepare(nitro)
         await build(nitro);
       }
@@ -37,7 +43,7 @@ const command = defineCommand({
         });
         
         const nitro = await createNitro({
-          dev: false,
+          preset: "./preset",
           handlers: [
             { route: "**", handler: "./handler.ts" }
           ],
