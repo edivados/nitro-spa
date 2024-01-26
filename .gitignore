@@ -1,0 +1,5 @@
+.build/
+.nitro/
+.output/
+.vscode/
+node_modules/

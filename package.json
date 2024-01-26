@@ -1,0 +1,16 @@
+{
+	"type": "module",
+	"scripts": {
+		"dev": "node cli.js dev",
+		"build": "node cli.js build",
+		"start": "node cli.js start"
+	},
+	"dependencies": {
+		"citty": "^0.1.5",
+		"h3": "^1.10.1",
+		"nitropack": "^2.8.1",
+		"solid-js": "^1.8.12",
+		"vite": "^5.0.12",
+		"vite-plugin-solid": "^2.9.1"
+	}
+}
