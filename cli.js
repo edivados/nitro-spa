@@ -11,7 +11,9 @@ const command = defineCommand({
         },
       },
       run: async ({ args: { port } }) => {
-        const { build, createDevServer, createNitro } = await import("nitropack");
+        const { build, createDevServer, createNitro } = await import(
+          "nitropack"
+        );
         const { toNodeListener } = await import("h3");
         const { ServerResponse } = await import("http");
         const nitro = await createNitro({
@@ -22,7 +24,7 @@ const command = defineCommand({
         const server = createDevServer(nitro);
         const listener = await server.listen(port);
         const nodeListener = toNodeListener(server.app);
-        listener.server.on("upgrade", (req) => { 
+        listener.server.on("upgrade", (req) => {
           nodeListener(req, new ServerResponse(req));
         });
         await build(nitro);
@@ -33,12 +35,13 @@ const command = defineCommand({
         await (
           await import("vite")
         ).build({
-          configFile: false,
+          configFile: "./client/vite.config.ts",
           root: "./client",
-          plugins: [(await import("vite-plugin-solid")).default()],
         });
 
-        const { build, createNitro, copyPublicAssets, prepare } = await import("nitropack");
+        const { build, createNitro, copyPublicAssets, prepare } = await import(
+          "nitropack"
+        );
         const nitro = await createNitro({
           preset: "./preset",
           handlers: [{ route: "**", handler: "./runtime/handler.ts" }],
