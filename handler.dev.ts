@@ -7,6 +7,5 @@ export default lazyEventHandler(async () => {
     plugins: [ (await import("vite-plugin-solid")).default() ]
   });
   useNitroApp().hooks.hook("close", () => server.close());
-  const handler = fromNodeMiddleware(server.middlewares);
-  return handler;
+  return fromNodeMiddleware(server.middlewares);
 });
