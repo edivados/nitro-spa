@@ -1,6 +1,6 @@
-export default defineNitroPlugin(async (nitroApp) => {
+export default defineNitroPlugin(async nitroApp => {
   const { createServer } = await import("vite");
-  nitroApp.vite = await createServer({
+  nitroApp.viteDevServer = await createServer({
     configFile: false,
     root: "./client",
     server: {
