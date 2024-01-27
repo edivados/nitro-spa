@@ -1,0 +1,15 @@
+diff --git a/dist/shared/nitro.4b3fd674.mjs b/dist/shared/nitro.4b3fd674.mjs
+index edbcd1f48eb3e2644501b7f217ac685d42d8b4d5..f84200f99e45834e0205fc7362dfeda31b672992 100644
+--- a/dist/shared/nitro.4b3fd674.mjs
++++ b/dist/shared/nitro.4b3fd674.mjs
+@@ -396,6 +396,10 @@ function createProxy(defaults = {}) {
+   const proxy = createProxyServer(defaults);
+   const handle = async (event, opts = {}) => {
+     try {
++      if (event.headers.get("upgrade") === "websocket") {
++        await proxy.ws(event.node.req, event.node.req.socket, opts, Buffer.alloc(0));
++        return;
++      }
+       await proxy.web(event.node.req, event.node.res, opts);
+     } catch (error) {
+       if (error.code !== "ECONNRESET") {
