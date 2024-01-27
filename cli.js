@@ -21,10 +21,10 @@ const command = defineCommand({
           handlers: [{ route: "**", handler: "./handler.dev.ts" }],
         });
         const server = createDevServer(nitro);
-        const listen = await server.listen(port);
-        const listener = toNodeListener(server.app);
-        listen.server.on("upgrade", (req) => { 
-          listener(req, new ServerResponse(req));
+        const listener = await server.listen(port);
+        const nodeListener = toNodeListener(server.app);
+        listener.server.on("upgrade", (req) => { 
+          nodeListener(req, new ServerResponse(req));
         });
         await build(nitro);
       },
