@@ -6,16 +6,9 @@ export default function Root() {
     const protocol = window.location.protocol.endsWith("s:") ? "wss:" : "ws:";
     const url = `${protocol}//${window.location.host}/ws`;
     const socket = new WebSocket(url);
-    socket.addEventListener("open", () => {
-      console.log("open");
-      setConnected(true)
-    });
-    socket.addEventListener("close", (ev) => {
-      console.log("close", ev);
-    });
-    socket.addEventListener("error", () => {
-      console.log("error");
-    });
+    socket.addEventListener("open", () => setConnected(true));
+    socket.addEventListener("close", (ev) => console.log("close", ev));
+    socket.addEventListener("error", () => console.log("error"));
   });
   return (
     <>
