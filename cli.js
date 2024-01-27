@@ -18,7 +18,8 @@ const command = defineCommand({
           dev: true,
           noPublicDir: true,
           ignore: ["public"], // noPublicDir doesn't work in dev?
-          handlers: [{ route: "**", handler: "./handler.dev.ts" }],
+          handlers: [{ route: "**", handler: "./runtime/dev-handler.ts" }],
+          plugins: ["./runtime/dev-server-plugin.ts"],
         });
         const server = createDevServer(nitro);
         const listener = await server.listen(port);
@@ -44,7 +45,7 @@ const command = defineCommand({
         const { build, createNitro, copyPublicAssets, prepare } = await import("nitropack");
         const nitro = await createNitro({
           preset: "./preset",
-          handlers: [{ route: "**", handler: "./handler.ts" }],
+          handlers: [{ route: "**", handler: "./runtime/handler.ts" }],
           publicAssets: [
             {
               baseURL: "/",
