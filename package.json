@@ -3,7 +3,8 @@
 	"scripts": {
 		"dev": "node cli.js dev",
 		"build": "node cli.js build",
-		"start": "node cli.js start"
+		"start": "node cli.js start",
+		"prepare": "nitro prepare"
 	},
 	"devDependencies": {
 		"@types/ws": "^8.5.10",

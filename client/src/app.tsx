@@ -1,13 +1,14 @@
-import { onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 
 export default function Root() {
+  const [connected, setConnected] = createSignal(false);
   onMount(() => {
     const protocol = window.location.protocol.endsWith("s:") ? "wss:" : "ws:";
     const url = `${protocol}//${window.location.host}/ws`;
     const socket = new WebSocket(url);
     socket.addEventListener("open", () => {
       console.log("open");
-      alert("connected");
+      setConnected(true)
     });
     socket.addEventListener("close", (ev) => {
       console.log("close", ev);
@@ -17,6 +18,9 @@ export default function Root() {
     });
   });
   return (
-    <div>SPA</div>
+    <>
+      <h1>{ connected() ? "Connected" : "Disconnected" }</h1>
+      <div>SPA</div>
+    </>
   )
 }

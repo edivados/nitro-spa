@@ -16,8 +16,6 @@ const command = defineCommand({
         const { ServerResponse } = await import("http");
         const nitro = await createNitro({
           dev: true,
-          noPublicDir: true,
-          ignore: ["public"], // noPublicDir doesn't work in dev?
           handlers: [{ route: "**", handler: "./runtime/dev-handler.ts" }],
           plugins: ["./runtime/dev-server-plugin.ts"],
         });
@@ -36,9 +34,7 @@ const command = defineCommand({
           await import("vite")
         ).build({
           configFile: false,
-          build: {
-            outDir: "./.build/client",
-          },
+          root: "./client",
           plugins: [(await import("vite-plugin-solid")).default()],
         });
 
@@ -49,7 +45,7 @@ const command = defineCommand({
           publicAssets: [
             {
               baseURL: "/",
-              dir: fileURLToPath(new URL(".build/client", import.meta.url)),
+              dir: fileURLToPath(new URL("./client/dist", import.meta.url)),
             },
           ],
         });
