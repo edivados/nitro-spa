@@ -4,7 +4,7 @@
 		"dev": "node cli.js dev",
 		"build": "node cli.js build",
 		"start": "node cli.js start",
-		"prepare": "nitro prepare"
+		"prepare": "nitro prepare --dir server"
 	},
 	"devDependencies": {
 		"@types/ws": "^8.5.10",

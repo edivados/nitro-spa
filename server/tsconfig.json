@@ -11,5 +11,5 @@
     "noEmit": true,
     "isolatedModules": true,
   },
-  "extends": "../.nitro/types/tsconfig.json"
+  "extends": "./.nitro/types/tsconfig.json"
 }
