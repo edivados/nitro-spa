@@ -12,6 +12,8 @@
 		"destr": "^2.0.2",
 		"h3": "1.10.0",
 		"nitropack": "^2.8.1",
+		"socket.io": "^4.7.4",
+		"socket.io-client": "^4.7.4",
 		"solid-js": "^1.8.12",
 		"vite": "^5.0.12",
 		"vite-plugin-solid": "^2.9.1",
