@@ -1,4 +1,4 @@
-export default eventHandler((event) => {
+export default eventHandler(event => {
   if (event.headers.get("upgrade") !== "websocket") {
     sendWebResponse(event, new Response(null, { status: 426 }));
     return;
