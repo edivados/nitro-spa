@@ -21,6 +21,9 @@ const command = defineCommand({
           rootDir: "./server",
           handlers: [{ route: "**", handler: "./runtime/dev-handler.ts" }],
           plugins: ["./runtime/dev-server-plugin.ts"],
+          experimental: {
+            websocket: true
+          },
         });
         const server = createDevServer(nitro);
         const listener = await server.listen(port);
@@ -54,6 +57,9 @@ const command = defineCommand({
               dir: fileURLToPath(new URL("./client/dist", import.meta.url)),
             },
           ],
+          experimental: {
+            websocket: true
+          }
         });
         await prepare(nitro);
         await copyPublicAssets(nitro);

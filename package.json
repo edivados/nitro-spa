@@ -8,20 +8,15 @@
 	},
 	"devDependencies": {
 		"@types/ws": "^8.5.10",
-		"citty": "^0.1.5",
-		"destr": "^2.0.2",
-		"h3": "1.10.0",
-		"nitropack": "^2.8.1",
+		"citty": "^0.1.6",
+		"destr": "^2.0.3",
+		"h3": "^1.11.1",
+		"nitropack": "^2.9.3",
 		"socket.io": "^4.7.4",
 		"socket.io-client": "^4.7.4",
-		"solid-js": "^1.8.12",
-		"vite": "^5.0.12",
-		"vite-plugin-solid": "^2.9.1",
+		"solid-js": "^1.8.15",
+		"vite": "^5.1.6",
+		"vite-plugin-solid": "^2.10.1",
 		"ws": "^8.16.0"
-	},
-	"pnpm": {
-		"patchedDependencies": {
-			"nitropack@2.8.1": "patches/nitropack@2.8.1.patch"
-		}
 	}
 }
