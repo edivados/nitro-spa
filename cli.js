@@ -17,8 +17,8 @@ const command = defineCommand({
         const nitro = await createNitro({
           dev: true,
           rootDir: "./server",
-          handlers: [{ route: "/**", handler: "./runtime/dev-handler.ts" }],
-          plugins: ["./runtime/dev-server-plugin.ts"],
+          handlers: [{ route: "/**", handler: "./dev/handler.ts" }],
+          plugins: ["./dev/server-plugin.ts"],
           experimental: {
             websocket: true
           },
@@ -44,7 +44,6 @@ const command = defineCommand({
         const nitro = await createNitro({
           rootDir: "./server",
           output: { dir: fileURLToPath(new URL(".output", import.meta.url)) },
-          handlers: [{ route: "/**", handler: "./runtime/handler.ts" }],
           publicAssets: [
             {
               baseURL: "/",
