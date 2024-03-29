@@ -1,5 +1,5 @@
 import { defineCommand, runMain } from "citty";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 
 const command = defineCommand({
   subCommands: {
@@ -11,26 +11,21 @@ const command = defineCommand({
         },
       },
       run: async ({ args: { port } }) => {
-        const { build, createDevServer, createNitro } = await import(
+        const { build, createDevServer, createNitro, prepare } = await import(
           "nitropack"
         );
-        const { toNodeListener } = await import("h3");
-        const { ServerResponse } = await import("http");
         const nitro = await createNitro({
           dev: true,
           rootDir: "./server",
-          handlers: [{ route: "**", handler: "./runtime/dev-handler.ts" }],
+          handlers: [{ route: "/**", handler: "./runtime/dev-handler.ts" }],
           plugins: ["./runtime/dev-server-plugin.ts"],
           experimental: {
             websocket: true
           },
         });
         const server = createDevServer(nitro);
-        const listener = await server.listen(port);
-        const nodeListener = toNodeListener(server.app);
-        listener.server.on("upgrade", (req) => {
-          nodeListener(req, new ServerResponse(req));
-        });
+        await server.listen(port);
+        await prepare(nitro);
         await build(nitro);
       },
     },
@@ -48,9 +43,8 @@ const command = defineCommand({
         );
         const nitro = await createNitro({
           rootDir: "./server",
-          preset: "./preset",
           output: { dir: fileURLToPath(new URL(".output", import.meta.url)) },
-          handlers: [{ route: "**", handler: "./runtime/handler.ts" }],
+          handlers: [{ route: "/**", handler: "./runtime/handler.ts" }],
           publicAssets: [
             {
               baseURL: "/",
@@ -64,7 +58,7 @@ const command = defineCommand({
         await prepare(nitro);
         await copyPublicAssets(nitro);
         await build(nitro);
-        nitro.close();
+        await nitro.close();
       },
     },
     start: {
