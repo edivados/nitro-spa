@@ -1,4 +1,4 @@
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { H3Event } from "h3";
 
