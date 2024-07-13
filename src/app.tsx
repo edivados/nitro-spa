@@ -12,7 +12,7 @@ export default function Root() {
     socket.addEventListener("close", (ev) => console.log("ws", "close", ev));
     socket.addEventListener("error", () => console.log("ws", "error"));
 
-    const io = socketio({ path: "/io/" });
+    const io = socketio({ path: "/io/", transports: ["websocket"] });
     io.on("connect", () => setConnectedIO(true));
     io.on("disconnect", () => console.log("socket.io", "disconnect"));
     io.on("connect_error", () => console.log("socket.io", "error"));

@@ -1,4 +1,6 @@
 import { defineCommand, runMain } from "citty";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "node:url";
 import solid from "vite-plugin-solid";
 
 function clientViteConfig() {
@@ -31,6 +33,17 @@ const command = defineCommand({
               handler: devHandler
             }
           ],
+          rollupConfig: {
+            plugins: [
+              {
+                load(id) {
+                  if (id.endsWith("nitro-dev.mjs")) {
+                    return readFileSync(fileURLToPath(new URL("./lib/nitro/nitro-dev.mjs", import.meta.url)), "utf-8");
+                  }
+                }
+              }
+            ]
+          }
         });
         const server = createDevServer(nitro);
         await server.listen(port);
@@ -42,7 +55,6 @@ const command = defineCommand({
       run: async () => {
         const { build: viteBuild } = await import("vite");
         const { rmSync } = await import("fs");
-        const { fileURLToPath } = await import("node:url");
         const { createNitro, prepare, copyPublicAssets, build } = await import("nitropack");
 
         await viteBuild(clientViteConfig());
@@ -65,6 +77,17 @@ const command = defineCommand({
               import { eventHandler } from 'h3'; 
               export default eventHandler(() => $fetch('/'));
             `,
+          },
+          rollupConfig: {
+            plugins: [
+              {
+                load(id) {
+                  if (id.endsWith("node-server.mjs")) {
+                    return readFileSync(fileURLToPath(new URL("./lib/nitro/node-server.mjs", import.meta.url)), "utf-8");
+                  }
+                }
+              }
+            ]
           }
         });
         await prepare(nitro);
