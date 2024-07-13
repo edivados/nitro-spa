@@ -3,20 +3,21 @@
 	"scripts": {
 		"dev": "node cli.js dev",
 		"build": "node cli.js build",
-		"start": "node cli.js start",
-		"prepare": "nitro prepare --dir server"
+		"start": "node cli.js start"
 	},
 	"devDependencies": {
-		"@types/ws": "^8.5.10",
+		"@types/ws": "^8.5.11",
 		"citty": "^0.1.6",
 		"destr": "^2.0.3",
-		"h3": "^1.11.1",
-		"nitropack": "^2.9.5",
+		"fast-glob": "^3.3.2",
+		"h3": "^1.12.0",
+		"nitropack": "^2.9.7",
+		"rou3": "^0.4.0",
 		"socket.io": "^4.7.5",
 		"socket.io-client": "^4.7.5",
-		"solid-js": "^1.8.16",
-		"vite": "^5.2.7",
+		"solid-js": "^1.8.18",
+		"vite": "^5.3.3",
 		"vite-plugin-solid": "^2.10.2",
-		"ws": "^8.16.0"
+		"ws": "^8.18.0"
 	}
 }
