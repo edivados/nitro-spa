@@ -1,1 +1,1 @@
-# Nitro SPA - With working ws and socket.io in middleware mode (no extra server)
+# Vite SPA + Nitro Server with Socket.IO & WS
