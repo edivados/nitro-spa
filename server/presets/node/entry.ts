@@ -2,14 +2,13 @@
 import "#nitro-internal-pollyfills";
 import { Server as HttpServer, ServerResponse } from "node:http";
 import { Server as HttpsServer } from "node:https";
+import type { AddressInfo } from "node:net";
 import destr from "destr";
 import { toNodeListener } from "h3";
-import { useNitroApp, useRuntimeConfig } from "nitropack/runtime";
-import {
-  setupGracefulShutdown,
-  startScheduleRunner,
-  trapUnhandledNodeErrors,
-} from "nitropack/runtime/internal";
+import { useNitroApp, useRuntimeConfig } from "#imports";
+import { setupGracefulShutdown } from "#internal/nitro/internal/shutdown";
+import { trapUnhandledNodeErrors } from "#internal/nitro/internal/utils";
+import { startScheduleRunner } from "#internal/nitro/internal/task";
 
 const cert = process.env.NITRO_SSL_CERT;
 const key = process.env.NITRO_SSL_KEY;
@@ -24,7 +23,7 @@ const server =
     : new HttpServer(requestListener);
 
 const port = (destr(process.env.NITRO_PORT || process.env.PORT) ||
-  3000);
+  3000) as number;
 const host = process.env.NITRO_HOST || process.env.HOST;
 
 const path = process.env.NITRO_UNIX_SOCKET;
@@ -37,7 +36,7 @@ const listener = server.listen(path ? { path } : { port, host }, (err) => {
     process.exit(1);
   }
   const protocol = cert && key ? "https" : "http";
-  const addressInfo = listener.address();
+  const addressInfo = listener.address() as AddressInfo;
   if (typeof addressInfo === "string") {
     console.log(`Listening on unix socket ${addressInfo}`);
     return;

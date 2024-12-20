@@ -34,7 +34,7 @@ const command = defineCommand({
               {
                 load(id) {
                   if (id.endsWith("nitro-dev.mjs")) {
-                    return readFileSync(fileURLToPath(new URL("./server/presets/runtime/nitro-dev.mjs", import.meta.url)), "utf-8");
+                    return readFileSync(fileURLToPath(new URL("./server/_nitro/runtime/nitro-dev.mjs", import.meta.url)), "utf-8");
                   }
                 }
               }
@@ -53,29 +53,18 @@ const command = defineCommand({
         await vite.build();
 
         const { fileURLToPath } = await import('node:url');
-        const { readFileSync } = await import('node:fs');
         const { createNitro, prepare, copyPublicAssets, build } = await import("nitropack");
         const nitro = await createNitro({
           compatibilityDate: '2024-12-20',
           srcDir: 'server',
           renderer: 'renderer.ts',
+          preset: 'server/presets/node',
           publicAssets: [
             {
               baseURL: "/",
               dir: fileURLToPath(new URL("./dist", import.meta.url)),
             },
-          ],
-          rollupConfig: {
-            plugins: [
-              {
-                load(id) {
-                  if (id.endsWith("node-server.mjs")) {
-                    return readFileSync(fileURLToPath(new URL("./server/presets/runtime/node-server.mjs", import.meta.url)), "utf-8");
-                  }
-                }
-              }
-            ]
-          }
+          ]
         });
         await prepare(nitro);
         await copyPublicAssets(nitro);

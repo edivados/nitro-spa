@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@types/ws": "^8.5.13",
 		"citty": "^0.1.6",
+		"destr": "^2.0.3",
 		"httpxy": "^0.1.5",
 		"vite": "^6.0.5",
 		"vite-plugin-solid": "^2.11.0"
