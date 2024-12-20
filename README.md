@@ -1,16 +1,16 @@
 # Vite SPA + Nitro Server with Socket.IO & WS in Node environment
 
-This repository demonstrates how to set up a Single Page Application (SPA) using Vite, integrated with a Nitro server, and demonstrates how to use Socket.IO and WebSockets (WS) for real-time communication.
+This repository demonstrates how to set up a Single Page Application (SPA) using Vite, integrated with a Nitro server, and demonstrates how to use [Socket.IO](https://github.com/socketio/socket.io) and [WebSockets (WS)](https://github.com/websockets/ws) for real-time communication.
 
 ## Overview
 
 ### Websocket upgrade handling
 
-In development, the project overwrites Nitros dev preset and uses a custom Node preset in production to enable passing upgrade requests to route handlers. The built in websocket support with crossws is disabled.
+In development, the project overwrites Nitros dev preset and uses a custom Node preset in production to enable passing upgrade requests to route handlers. The built in websocket support with [crossws](https://github.com/unjs/crossws) is disabled.
 
 #### Socket.IO with Nitro
 
-Socket.IO is a bit tricky because it expects to be passed an http server instance. For production, it would be possible to make the server accessible, but there doesn't seem to be a way to do that in development because of the way Nitro works under the hood, with a listen instance and worker running the actual server code.
+Socket.IO is a bit tricky because it expects to be passed an http server instance. For production, it would be possible to make the server accessible, but there doesn't seem to be a way to do that in development because of the way Nitro works under the hood, with a listhen instance and worker running the actual server code.
 
 A solution I settled with is to pass a Node HTTP server instance to Socket.IO without starting it, and manually emit the `request` and `upgrade` events on the server instance.
 
