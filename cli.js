@@ -19,12 +19,10 @@ const command = defineCommand({
         const { fileURLToPath } = await import('node:url');
         const { createNitro, createDevServer, prepare, build } = await import("nitropack");
         const nitro = await createNitro({
+          compatibilityDate: '2024-12-20',
           dev: true,
           noPublicDir: true, // Leave handling of public dir to vite.
           srcDir: 'server',
-          experimental: {
-            websocket: true
-          },
           renderer: 'renderer.ts',
           runtimeConfig: {
             vite: {
@@ -36,7 +34,7 @@ const command = defineCommand({
               {
                 load(id) {
                   if (id.endsWith("nitro-dev.mjs")) {
-                    return readFileSync(fileURLToPath(new URL("./server/lib/nitro/nitro-dev.mjs", import.meta.url)), "utf-8");
+                    return readFileSync(fileURLToPath(new URL("./server/presets/runtime/nitro-dev.mjs", import.meta.url)), "utf-8");
                   }
                 }
               }
@@ -58,6 +56,7 @@ const command = defineCommand({
         const { readFileSync } = await import('node:fs');
         const { createNitro, prepare, copyPublicAssets, build } = await import("nitropack");
         const nitro = await createNitro({
+          compatibilityDate: '2024-12-20',
           srcDir: 'server',
           renderer: 'renderer.ts',
           publicAssets: [
@@ -71,7 +70,7 @@ const command = defineCommand({
               {
                 load(id) {
                   if (id.endsWith("node-server.mjs")) {
-                    return readFileSync(fileURLToPath(new URL("./server/lib/nitro/node-server.mjs", import.meta.url)), "utf-8");
+                    return readFileSync(fileURLToPath(new URL("./server/presets/runtime/node-server.mjs", import.meta.url)), "utf-8");
                   }
                 }
               }
