@@ -23,7 +23,7 @@ const command = defineCommand({
           dev: true,
           noPublicDir: true, // Leave handling of public dir to vite.
           srcDir: 'server',
-          renderer: 'renderer.ts',
+          renderer: 'server/renderer.ts',
           runtimeConfig: {
             vite: {
               url: viteDevServer.resolvedUrls.local[0]
@@ -57,7 +57,7 @@ const command = defineCommand({
         const nitro = await createNitro({
           compatibilityDate: '2024-12-20',
           srcDir: 'server',
-          renderer: 'renderer.ts',
+          renderer: 'server/renderer.ts',
           preset: 'server/presets/node',
           publicAssets: [
             {
