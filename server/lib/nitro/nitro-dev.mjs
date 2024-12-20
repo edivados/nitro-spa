@@ -19,12 +19,9 @@ import { runTask, startScheduleRunner } from "../task.mjs";
 import { tasks, scheduledTasks } from "#internal/nitro/virtual/tasks";
 const requestListener = toNodeListener(nitroApp.h3App);
 const server = new Server(requestListener);
-if (import.meta._websocket) {
-  const { handleUpgrade } = wsAdapter(nitroApp.h3App.websocket);
-  server.on("upgrade", (req) => {
-    requestListener(req, new ServerResponse(req));
-  });
-}
+server.on("upgrade", (req) => {
+  requestListener(req, new ServerResponse(req));
+});
 function getAddress() {
   if (provider === "stackblitz" || process.env.NITRO_NO_UNIX_SOCKET || process.versions.bun) {
     return 0;
